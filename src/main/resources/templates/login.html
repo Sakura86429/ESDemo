@@ -1,17 +1,112 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>login</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form role="form" action = "/loginIn" method="post">-->
+<!--  账号：<input type="text" id="name" name = "name"> <br>-->
+<!--  密码：<input type="password" id = "password" name = "password"> <br>-->
+<!--  <input type="submit" id = "login" value = "login">-->
+<!--  <input type="submit" id = "register" value = "register">-->
+<!--</form>-->
+<!--&lt;!&ndash;</form role="form1" action="/signup" method="post">&ndash;&gt;-->
+<!--&lt;!&ndash;  <input type="submit" id="register" value="注册">&ndash;&gt;-->
+<!--&lt;!&ndash;</form>&ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat;
+      background-size: 100% 130%;
+    }
+
+    #login_box {
+      width: 20%;
+      height: 400px;
+      background-color: #00000060;
+      margin: auto;
+      margin-top: 10%;
+      text-align: center;
+      border-radius: 10px;
+      padding: 50px 50px;
+    }
+
+    h2 {
+      color: #ffffff90;
+      margin-top: 5%;
+    }
+
+    #input-box {
+      margin-top: 5%;
+    }
+
+    span {
+      color: #fff;
+    }
+
+    input {
+      border: 0;
+      width: 60%;
+      font-size: 15px;
+      color: #fff;
+      background: transparent;
+      border-bottom: 2px solid #fff;
+      padding: 5px 10px;
+      outline: none;
+      margin-top: 10px;
+    }
+
+    button {
+      margin-top: 50px;
+      width: 60%;
+      height: 30px;
+      border-radius: 10px;
+      border: 0;
+      color: #fff;
+      text-align: center;
+      line-height: 30px;
+      font-size: 15px;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+    }
+
+    #sign_up {
+      margin-top: 45%;
+      margin-left: 60%;
+    }
+
+    a {
+      color: #b94648;
+    }
+  </style>
 </head>
+
 <body>
-<form role="form" action = "/loginIn" method="post">
-  账号：<input type="text" id="name" name = "name"> <br>
-  密码：<input type="password" id = "password" name = "password"> <br>
-  <input type="submit" id = "login" value = "login">
-</form>
-<!--</form role="form1" action="/signup" method="post">-->
-<!--  <input type="submit" id="register" value="注册">-->
-<!--</form>-->
+<div id="login_box">
+  <h2>LOGIN</h2>
+  <form role="form" action = "/loginIn" method="post">
+    <div id="input_box_name">
+      <input type="text" placeholder="name" id="name" name="name">
+    </div>
+    <div id="input_box_pwd">
+      <input type="password" placeholder="password" id="password" name="password">
+    </div>
+    <button type="submit">Sign in</button><br>
+      <div class="msg">
+        Don't have account?
+        <a href="register">Sign up</a>
+      </div>
+  </form>
+</div>
 </body>
 </html>
+

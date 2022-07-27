@@ -70,11 +70,11 @@ public class LoginController {
 //        return "signup";
 //    }
 
-    //实现注册功能
-//    @RequestMapping(value = "/register",method = RequestMethod.POST)
-//    public String signUp(String name,String password){
+//    实现注册功能
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public String signUp(String name,String password){
 //        userService.Insert(name, password);
-//        return "success";
-//    }
+        return "success";
+    }
 
 }
