@@ -6,11 +6,11 @@ import com.zhj.esdemo.pojo.UserBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
-//@Component
 public interface UserMapper {
 //    查询，可以实现登录功能
 //    @Select("select * from usertable where username = #{username} and userpassword = #{userpassword}")

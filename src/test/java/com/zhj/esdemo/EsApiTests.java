@@ -72,7 +72,7 @@ public class EsApiTests {
     @Test
     void getIndex() throws IOException {
         //1、构建 获取索引的请求
-        GetIndexRequest request = new GetIndexRequest("jd_goods");
+        GetIndexRequest request = new GetIndexRequest("user_index");
         //2、客户端判断该索引是否存在
         boolean exists = client1.indices().exists(request, RequestOptions.DEFAULT);
         //3、打印
@@ -85,7 +85,7 @@ public class EsApiTests {
     @Test
     void deleteIndex() throws IOException {
         //1、构建 删除索引请求
-        DeleteIndexRequest request = new DeleteIndexRequest("jd_goods");
+        DeleteIndexRequest request = new DeleteIndexRequest("user_index");
         //2、客户段执行删除的请求
         AcknowledgedResponse response = client1.indices().delete(request, RequestOptions.DEFAULT);
         //3、打印
@@ -209,11 +209,11 @@ public class EsApiTests {
 
         //构建精确匹配查询条件
         //构建精确匹配查询条件
-//        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("username.keyword", "四");   // 只能精准查询，查询"四"出不来结果
-//        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("username.keyword", "李四");
+//        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("username.keyword", "李四");// 只能精准查询，查询"四"出不来结果
+
 //        QueryBuilder  termQueryBuilder = QueryBuilders.matchQuery("username", "李");   // 前缀查询，但是不能带.keyword【作用是不让分词】
-        QueryBuilder  termQueryBuilder = QueryBuilders.fuzzyQuery("username", "四");   // 前缀查询，但是不能带.keyword【作用是不让分词】
-//        QueryBuilder termQueryBuilder = QueryBuilders.matchAllQuery();
+//        QueryBuilder  termQueryBuilder = QueryBuilders.fuzzyQuery("username", "四");   // 前缀查询，但是不能带.keyword【作用是不让分词】
+        QueryBuilder termQueryBuilder = QueryBuilders.matchAllQuery();
 //        MatchAllQueryBuilder matchAllQueryBuilder = QueryBuilders.matchAllQuery();
 //        WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery("username", "张");
         builder.query(termQueryBuilder);
