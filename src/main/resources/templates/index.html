@@ -5,6 +5,8 @@
     <title>狂神说Java-ES仿京东实战</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <script th:src="@{/js/jquery.min.js}"></script>
+
+
 </head>
 <body class="pg">
 <div class="page">
@@ -15,24 +17,33 @@
                 <div class="headerCon ">
                     <!-- Logo-->
                     <h1 id="mallLogo">
+                        <div align="right" style="position:relative;top:-17px;right:1px">
+<!--                            <div class="exp">-->
+<!--                                <p v-text="speechkeyword"></p>-->
+<!--                            </div>-->
+                            <button class="btn-red" type="submit" @click.prevent="speechsearchKey" id="speechsearchbtn" style="width:70px;height:38px ">语音搜索</button>
+                        </div>
 <!--                        <img th:src="@{/images/jdlogo.png}" alt="">-->
                     </h1>
                     <div class="header-extra">
-                        <!--搜索-->
                         <div id="mallSearch" class="mall-search">
                             <form name="searchTop" class="mallSearch-form clearfix">
                                 <fieldset>
                                     <legend>天猫搜索</legend>
-                                    <div class="mallSearch-input clearfix">
-                                        <div class="s-combobox" id="s-combobox-685">
-                                            <div class="s-combobox-input-wrap">
-                                                <input v-model="keyword"  type="text" autocomplete="off" id="mq"
-                                                       class="s-combobox-input"  aria-haspopup="true">
+                                        <div class="mallSearch-input clearfix">
+                                            <div class="s-combobox" id="s-combobox-685">
+<!--                                                <div class="s-combobox-input-wrap">-->
+                                                <div class="s-combobox-input-wrap">
+                                                    <input v-model="speechkeyword" type="text" autocomplete="off" id="mq"
+                                                           class="s-combobox-input" aria-haspopup="true">
+<!--                                                <input v-model="keyword" type="text" autocomplete="off" id="mq"-->
+<!--                                                       class="s-combobox-input" aria-haspopup="true" >-->
+                                                </div>
                                             </div>
+                                            <button type="submit" @click.prevent="searchKey" id="searchbtn">搜索</button>
+                                            <!--                                        <button type="submit" @click.prevent="speechsearchKey" id="speechsearchbtn">语音搜索</button>-->
+                                            <!--                                        <button type="submit" @click.prevent="searchKey()" id="searchbtn">搜索</button>-->
                                         </div>
-                                        <button type="submit" @click.prevent="searchKey" id="searchbtn">搜索</button>
-<!--                                        <button type="submit" @click.prevent="searchKey()" id="searchbtn">搜索</button>-->
-                                    </div>
                                 </fieldset>
                             </form>
                             <ul class="relKeyTop">
@@ -43,6 +54,8 @@
                                 <li><a>理财</a></li>
                             </ul>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -117,20 +130,118 @@
         el:"#app",
         data:{
             "keyword": '', // 搜索的关键字
-            "results":[] // 后端返回的结果
+            "speechkeyword": '', // 语音识别结果
+            "results":[], // 后端ES搜索返回的结果
+            "resultList":[] // 后端语音搜索返回的结果
         },
         methods:{
+            speechsearchKey(){
+                // this.speechkeyword = "请讲话";
+                this.speechkeyword = "解析中，请稍等.........";
+                axios.get('speechSearch').then(response=>{
+                    console.log(response.data);
+                    // this.resultList = response.data;
+                    this.speechkeyword = response.data[0];
+                    this.results = response.data[1];
+                })
+            },
             searchKey(){
-                var keyword = this.keyword;
+                var keyword = this.speechkeyword;
                 console.log(keyword);
                 axios.get('search/'+keyword+'/0/20').then(response=>{
                     console.log(response.data);
                     this.results = response.data;
                 })
+                // var keyword = this.keyword;
+                // console.log(keyword);
+                // axios.get('search/'+keyword+'/0/20').then(response=>{
+                //     console.log(response.data);
+                //     this.results = response.data;
+                // })
             }
         }
     });
 </script>
 </body>
 </html>
+
+<style>
+    .custom-btn {
+        width: 130px;
+        height: 40px;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px 25px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+        7px 7px 20px 0px rgba(0,0,0,.1),
+        4px 4px 5px 0px rgba(0,0,0,.1);
+        outline: none;
+    }
+    /* 1 */
+    .btn-1 {
+        background: rgb(6,14,131);
+        background: linear-gradient(0deg, rgba(6,14,131,1) 0%, rgba(12,25,180,1) 100%);
+        border: none;
+    }
+    .btn-blue { background: #2ae; }
+    .btn-pink { background: #e1a; }
+    .btn-red { background: #FF0036; }
+    .btn-hover { border-color: #a00; }
+    .GG1-hover{ background-color: #fd6a80; }
+
+    /* 圆形按钮 */
+    .btncircle{
+
+        width: 70px;
+
+        height: 70px;
+
+        border-radius: 50%;
+
+        position: absolute;
+
+        top: 306px;
+
+        left: 660px;
+
+        color: #ff8232;
+
+        font-size: x-large;
+
+        border: solid white;
+
+        background: none;
+
+    }
+
+    /* 按下去的按钮 */
+    .button1 {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        /*padding: 16px 32px;*/
+        text-align: center;
+        background-color: white;
+        /*color: black;*/
+        color: red;
+        /*border: 2px solid #4CAF50;*/
+        /*border: 2px solid #FF0036;*/
+        /*border-radius:5px;*/
+    }
+    .button1-hover {
+        /*background-color: #4CAF50;   !* 墨绿色 *!*/
+        background-color: #FF0036;
+        color: white;
+    }
+
+
+    div{}
+    .exp{float: left; height: 100px}
+</style>
 
