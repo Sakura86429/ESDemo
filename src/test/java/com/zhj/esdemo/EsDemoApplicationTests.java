@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class EsDemoApplicationTests {
 
     @Test
-    void contextLoads() {
+    void speechLoads() {
     }
 
 }
