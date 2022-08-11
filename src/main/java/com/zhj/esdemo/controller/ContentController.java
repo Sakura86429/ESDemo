@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -25,8 +26,10 @@ import java.util.Map;
  */
 @Controller
 public class ContentController {
+
     @Autowired
     ContentService contentService;
+
     @GetMapping("/parse/{keyword}")
     @ResponseBody
     public Boolean test(@PathVariable String keyword) throws IOException {
@@ -34,6 +37,7 @@ public class ContentController {
         System.out.println("parseContext = " + parseContext);
         return parseContext;
     }
+
     @GetMapping("/search/{keyword}/{pageNO}/{pageSize}")
     @ResponseBody
     public List<Map<String, Object>> search(@PathVariable("keyword") String keyword, @PathVariable("pageNO") int pageNo, @PathVariable int pageSize) throws IOException {
@@ -41,4 +45,5 @@ public class ContentController {
 //        System.out.println(list);
         return list;
     }
+
 }
