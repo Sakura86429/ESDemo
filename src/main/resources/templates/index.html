@@ -21,17 +21,26 @@
 <!--                            <div class="exp">-->
 <!--                                <p v-text="speechkeyword"></p>-->
 <!--                            </div>-->
-                            <button class="btn-red" type="submit" @click.prevent="speechsearchKey" id="speechsearchbtn" style="width:70px;height:38px ">语音搜索</button>
+                            <div class="s-combobox-input-wrap">
+<!--                                爬虫-->
+                                <button class="btn-gray" type="submit" @click.prevent="parse" id="parsebtn" style="width:50px;height:38px ">爬数据</button>
+                                <input v-model="parseword" type="text" autocomplete="off" id="parse"
+                                       class="s-combobox-input" aria-haspopup="true">
+                                <button class="btn-red" type="submit" @click.prevent="speechsearchKey" id="speechsearchbtn" style="width:70px;height:38px ">语音搜索</button>
+                            </div>
+
                         </div>
 <!--                        <img th:src="@{/images/jdlogo.png}" alt="">-->
                     </h1>
                     <div class="header-extra">
+
                         <div id="mallSearch" class="mall-search">
                             <form name="searchTop" class="mallSearch-form clearfix">
                                 <fieldset>
                                     <legend>天猫搜索</legend>
                                         <div class="mallSearch-input clearfix">
                                             <div class="s-combobox" id="s-combobox-685">
+<!--                                            <div>-->
 <!--                                                <div class="s-combobox-input-wrap">-->
                                                 <div class="s-combobox-input-wrap">
                                                     <input v-model="speechkeyword" type="text" autocomplete="off" id="mq"
@@ -39,6 +48,9 @@
 <!--                                                <input v-model="keyword" type="text" autocomplete="off" id="mq"-->
 <!--                                                       class="s-combobox-input" aria-haspopup="true" >-->
                                                 </div>
+                                            </div>
+                                            <div>
+<!--                                                <button class="btn-red" type="submit" @click.prevent="speechsearchKey" id="speechsearchbtn" style="width:70px;height:38px ">语音搜索</button>-->
                                             </div>
                                             <button type="submit" @click.prevent="searchKey" id="searchbtn">搜索</button>
                                             <!--                                        <button type="submit" @click.prevent="speechsearchKey" id="speechsearchbtn">语音搜索</button>-->
@@ -55,8 +67,8 @@
                             </ul>
                         </div>
 
-
                     </div>
+
                 </div>
             </div>
         </div>
@@ -132,7 +144,8 @@
             "keyword": '', // 搜索的关键字
             "speechkeyword": '', // 语音识别结果
             "results":[], // 后端ES搜索返回的结果
-            "resultList":[] // 后端语音搜索返回的结果
+            "resultList":[] ,// 后端语音搜索返回的结果
+            "parseword": '' // 爬取的关键词
         },
         methods:{
             speechsearchKey(){
@@ -158,6 +171,14 @@
                 //     console.log(response.data);
                 //     this.results = response.data;
                 // })
+            },
+            parse(){   // 是请求转发，controller那里没有return跳转界面
+                var parseword = this.parseword;   // 此变量和this.parseword变量在vue中不是同一个
+                this.parseword = "爬取中，请稍等...";
+                axios.get('parse/' + parseword).then(response=>{
+                    console.log(response.data);
+                    this.parseword = response.data;
+                })
             }
         }
     });
