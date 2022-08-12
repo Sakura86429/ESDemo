@@ -32,10 +32,14 @@ public class ContentController {
 
     @GetMapping("/parse/{keyword}")
     @ResponseBody
-    public Boolean test(@PathVariable String keyword) throws IOException {
+//    public Boolean test(@PathVariable String keyword) throws IOException {
+    public String test(@PathVariable String keyword) throws IOException {
         Boolean parseContext = contentService.parseContext(keyword);
-        System.out.println("parseContext = " + parseContext);
-        return parseContext;
+        System.out.println("parseContext = " + parseContext);   // true
+        if(parseContext) return "爬取成功";
+        else return "没有爬到数据";
+
+//        return parseContext;
     }
 
     @GetMapping("/search/{keyword}/{pageNO}/{pageSize}")
