@@ -1,5 +1,6 @@
 package com.zhj.esdemo;
 
+import com.zhj.esdemo.mapper.MysqlQueryMapper;
 import com.zhj.esdemo.mapper.UserMapper;
 import com.zhj.esdemo.pojo.Content;
 import com.zhj.esdemo.pojo.User;
@@ -26,6 +27,9 @@ public class MysqlApiTests {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private MysqlQueryMapper mysqlQueryMapper;
 
 
     @Test
@@ -76,4 +80,10 @@ public class MysqlApiTests {
 //        System.out.println("该用户ID为：");
 //        System.out.println(user);
 //    }
+
+    @Test
+    void LikeFind() {
+        List<Content> contents = mysqlQueryMapper.getContentList("%书包%");
+        System.out.println(contents);
+    }
 }

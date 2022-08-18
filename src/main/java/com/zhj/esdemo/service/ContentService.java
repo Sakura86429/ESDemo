@@ -83,6 +83,7 @@ public class ContentService {
         //把查询到的数据放入es索引中
         BulkRequest bulkRequest = new BulkRequest("jd_goods");
         bulkRequest.timeout("2m");
+//        bulkRequest.timeout("5m");
         for (int i = 0; i < contents.size(); i++) {
             bulkRequest.add(new IndexRequest("jd_goods")
 //                    .id(String.valueOf(i+1))//设置文档的id，如果没有指定，会随机生成，自己测试
