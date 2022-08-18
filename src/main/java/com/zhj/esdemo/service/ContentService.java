@@ -10,6 +10,7 @@ package com.zhj.esdemo.service;
  */
 
 import com.alibaba.fastjson.JSON;
+import com.zhj.esdemo.mapper.UserMapper;
 import com.zhj.esdemo.pojo.Content;
 import com.zhj.esdemo.utils.HtmlParseUtil;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -48,6 +49,9 @@ public class ContentService {
     @Autowired
     private RestHighLevelClient restHighLevelClient;
 
+    @Autowired
+    private UserMapper userMapper;
+
 /*    public static void main(String[] args) throws IOException {
         new ContentService().parseContext("java");
     }*/
@@ -56,11 +60,30 @@ public class ContentService {
      * 1. 解析数据放入es索引中
      */
 
+    public void inserGoods(List<Content> contents) {
+
+        long stime = System.currentTimeMillis(); // 统计开始时间
+        for (Content con : contents) {
+            String title = con.getTitle();
+            String price = con.getPrice();
+            String img = con.getImg();
+            userMapper.addGoods(title, price, img);
+        }
+
+        long etime = System.currentTimeMillis(); // 统计结束时间
+        System.out.println("执行时间：" + (etime - stime) + "ms");
+    }
+
     public Boolean parseContext(String keywords) throws IOException {
         List<Content> contents = new HtmlParseUtil().parseJD(keywords);
+
+        //把查询到的数据放入mysql中   // 不放入mysql的话可以注释掉，对后面的代码没有影响
+        inserGoods(contents);
+
         //把查询到的数据放入es索引中
         BulkRequest bulkRequest = new BulkRequest("jd_goods");
         bulkRequest.timeout("2m");
+//        bulkRequest.timeout("5m");
         for (int i = 0; i < contents.size(); i++) {
             bulkRequest.add(new IndexRequest("jd_goods")
 //                    .id(String.valueOf(i+1))//设置文档的id，如果没有指定，会随机生成，自己测试

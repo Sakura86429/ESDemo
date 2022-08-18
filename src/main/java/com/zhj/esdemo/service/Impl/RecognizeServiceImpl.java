@@ -28,6 +28,7 @@ public class RecognizeServiceImpl implements RecognizeService {
         SpeechUtility.createUtility(param.toString() );
 //        t.startListen();
         t.start();
+//        t.join();
         Thread.sleep(4000);
         return word.getSpeechword();
     }

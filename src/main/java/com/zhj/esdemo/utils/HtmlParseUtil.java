@@ -32,11 +32,12 @@ public class HtmlParseUtil {
         //获取请求
         //前提：需要联网，ajax不能获取到
         String url = "https://search.jd.com/Search?keyword=" + keyword;
+//        String url = "https://www.baidu.com";
         //解析网页  ,(jsoup 返回的对象就是浏览器document对象)
         Document document = Jsoup.parse(new URL(url), 30000);
         //所有你在js中可以使用的方法，在这里都可以用。
         Element j_goodsList = document.getElementById("J_goodsList");
-        //  System.out.println(j_goodsList.html());
+        System.out.println("j_goodsList.html() " + j_goodsList.html());
         //获取所有的li元素
         Elements li = j_goodsList.getElementsByTag("li");
         //list

@@ -59,7 +59,8 @@ public class EsApiTests {
     @Test
     void createIndex() throws IOException {
         //1、构建 创建索引的请求
-        CreateIndexRequest request = new CreateIndexRequest("user_index");//索引名
+//        CreateIndexRequest request = new CreateIndexRequest("user_index");//索引名
+        CreateIndexRequest request = new CreateIndexRequest("jd_goods");//索引名
         //2、客户端执行请求,获取响应
         CreateIndexResponse response = client1.indices().create(request, RequestOptions.DEFAULT);
         //3、打印
@@ -85,7 +86,7 @@ public class EsApiTests {
     @Test
     void deleteIndex() throws IOException {
         //1、构建 删除索引请求
-        DeleteIndexRequest request = new DeleteIndexRequest("user_index");
+        DeleteIndexRequest request = new DeleteIndexRequest("jd_goods");
         //2、客户段执行删除的请求
         AcknowledgedResponse response = client1.indices().delete(request, RequestOptions.DEFAULT);
         //3、打印
