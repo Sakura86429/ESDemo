@@ -311,6 +311,73 @@ public class ContentService {
         return list;
     }
 
+    //2. 获取这些数据实现搜索功能
+    public List<Map<String, Object>> serchPageBuilderAll(String keyword) throws IOException {
+        //条件搜索
+        //1、构建搜索请求
+        SearchRequest jd_goods = new SearchRequest("jd_goods");
+        //2、设置搜索条件，使用该构建器进行查询
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        // 构建精确匹配查询条件
+//        TermQueryBuilder termQuery = QueryBuilders.termQuery("title", keyword);
+//        TermQueryBuilder termQuery = QueryBuilders.termQuery("title.keyword", keyword);
+//        searchSourceBuilder.query(termQuery);
+
+
+
+
+        // 自试 索引查询
+//        QueryBuilder queryBuilder = QueryBuilders.matchAllQuery();
+        QueryBuilder queryBuilder = QueryBuilders.matchQuery("title", keyword);   // 成功【单子多字都成功】
+        searchSourceBuilder.query(queryBuilder);
+//        QueryBuilder queryBuilder = QueryBuilders.matchQuery("title", "轻松");   // 成功【单子多字都成功】
+//        searchSourceBuilder.query(queryBuilder);
+
+
+
+        searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
+//        searchSourceBuilder.from(pageNo);
+//        searchSourceBuilder.size(pageSize);
+
+        HighlightBuilder highlightBuilder = new HighlightBuilder();
+        highlightBuilder.requireFieldMatch(true);
+        highlightBuilder.field("title");
+        highlightBuilder.preTags("<span style='color:red'>");
+        highlightBuilder.postTags("</span>");
+        // highlightBuilder.requireFieldMatch(false);//匹配第一个即可
+        // highlightBuilder.numOfFragments(0);
+
+        searchSourceBuilder.highlighter(highlightBuilder);
+        //3、将搜索条件放入搜索请求中
+        jd_goods.source(searchSourceBuilder);
+        //4、客户端执行搜索请求
+        SearchResponse search = restHighLevelClient.search(jd_goods, RequestOptions.DEFAULT);
+        System.out.println("共查询到"+search.getHits().getHits().length+"条数据");
+
+        //5、打印测试
+        Map<String, Object> map = new HashMap<>();
+        ArrayList<Map<String,Object>> list = new ArrayList();
+        for (SearchHit hit : search.getHits()) {
+
+            //
+
+            String value = hit.getSourceAsString();
+            Content esProductTO = JSON.parseObject(value, Content.class);
+
+            map.put("fragment", JSON.toJSONString(esProductTO.getTitle()));
+            System.out.println(esProductTO.getTitle());
+
+
+            map.put("fr", JSON.toJSONString(esProductTO.getTitle()));
+
+
+            map = hit.getSourceAsMap();
+            //System.out.println("hit = " + hit);
+            list.add(map);
+        }
+        return list;
+    }
+
 
 //    @Autowired
 //    private ElasticsearchRestTemplate elasticsearchTemplate;
